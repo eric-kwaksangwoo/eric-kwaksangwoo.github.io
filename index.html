@@ -166,14 +166,33 @@
                 <h2 class="mb-4">오시는길</h2>
                 <a class="btn btn-light btn-xl" href="https://map.kakao.com/link/map/8466281">카카오</a>
                 <div id="kakaomap" style="width:500px;height:400px;"></div>
+                <div id="clickLatlng"></div>
                	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=bce15daad88d89d548ffaa2c6f9d5f78"></script>
                 <script>
                     var container = document.getElementById('kakaomap');
                     var options = {
                         center: new kakao.maps.LatLng(37.55949060312369, 126.98169887911067),
-                        level: 3
+                        level: 4
                     };
                     var map = new kakao.maps.Map(container, options);
+                    
+                    var marker = new kakao.maps.Marker({ 
+                        position: map.getCenter() 
+                    }); 
+                    marker.setMap(map);
+                    
+                    kakao.maps.event.addListener(map, 'click', function(mouseEvent) {        
+    
+                    // 클릭한 위도, 경도 정보를 가져옵니다 
+                    var latlng = mouseEvent.latLng; 
+
+                    // 마커 위치를 클릭한 위치로 옮깁니다
+                    marker.setPosition(latlng);
+
+                    var resultDiv = document.getElementById('clickLatlng'); 
+                    resultDiv.innerHTML = message;
+
+                  });
                 </script>
             </div>
         </section>
